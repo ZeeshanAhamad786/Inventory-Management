@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <title>Ash Aviation Stores — Inventory, GRN &amp; Costing System</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 16mm 18mm 16mm;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: #1c2430;
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      font-size: 11pt;
+      line-height: 1.45;
+      background: #fff;
+    }
+    h1, h2, h3, h4, .sans {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .cover {
+      min-height: 250mm;
+      padding: 18mm 8mm 12mm;
+      page-break-after: always;
+      background:
+        linear-gradient(180deg, #0e2744 0%, #0e2744 42%, #123056 42%, #123056 44%, #f4f1ea 44%, #f4f1ea 100%);
+      color: #f4f1ea;
+    }
+    .cover-kicker {
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 10px;
+      color: #c9b27c;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .cover h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      margin: 18px 0 8px;
+      font-weight: 650;
+      max-width: 520px;
+    }
+    .cover .subtitle {
+      font-size: 16px;
+      color: #d7e2ef;
+      max-width: 460px;
+      margin-bottom: 28px;
+    }
+    .cover-meta {
+      margin-top: 120px;
+      color: #1c2430;
+    }
+    .cover-meta table { width: 100%; border-collapse: collapse; }
+    .cover-meta td {
+      padding: 7px 0;
+      border-bottom: 1px solid #d8d2c6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+    }
+    .cover-meta td:first-child { color: #6b6256; width: 38%; }
+    .badge {
+      display: inline-block;
+      border: 1px solid #c9b27c;
+      color: #c9b27c;
+      padding: 4px 10px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    h2 {
+      color: #0e2744;
+      font-size: 16.5px;
+      margin: 0 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #c9b27c;
+    }
+    h3 {
+      color: #123056;
+      font-size: 12.5px;
+      margin: 16px 0 6px;
+    }
+    p { margin: 0 0 9px; }
+    ul, ol { margin: 0 0 10px; padding-left: 18px; }
+    li { margin-bottom: 4px; }
+    .section { page-break-inside: avoid; margin-bottom: 16px; }
+    .page-break { page-break-before: always; }
+    table.data {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 9.5pt;
+    }
+    table.data th {
+      background: #0e2744;
+      color: #fff;
+      text-align: left;
+      padding: 7px 8px;
+      font-weight: 600;
+    }
+    table.data td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #e4ddd2;
+      vertical-align: top;
+    }
+    table.data tr:nth-child(even) td { background: #f7f4ee; }
+    .callout {
+      background: #f4f1ea;
+      border-left: 4px solid #c9b27c;
+      padding: 10px 12px;
+      margin: 10px 0 12px;
+      font-size: 10.5pt;
+    }
+    .flow {
+      display: table;
+      width: 100%;
+      margin: 10px 0 14px;
+      border-collapse: separate;
+      border-spacing: 6px 0;
+    }
+    .flow-step {
+      display: table-cell;
+      width: 16.6%;
+      background: #0e2744;
+      color: #fff;
+      padding: 10px 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 8.5pt;
+      vertical-align: top;
+    }
+    .flow-step b {
+      display: block;
+      color: #c9b27c;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .grid-2 {
+      display: table;
+      width: 100%;
+      border-spacing: 10px 0;
+      margin: 8px 0 12px;
+    }
+    .grid-2 > div {
+      display: table-cell;
+      width: 50%;
+      background: #f7f4ee;
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+    .grid-2 h3 { margin-top: 0; }
+    .muted { color: #5c6570; }
+    .footer-note {
+      margin-top: 18px;
+      font-size: 9pt;
+      color: #6b6256;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .num {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: #c9b27c;
+      color: #0e2744;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 18px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="cover">
+    <div class="badge">Client presentation guide</div>
+    <div class="cover-kicker" style="margin-top:28px">Ash Aviation Stores</div>
+    <h1>Inventory, GRN &amp; Costing Management System</h1>
+    <p class="subtitle">A working digital replacement for the current Excel booking-in, costing and print workflow.</p>
+    <div class="cover-meta">
+      <table>
+        <tr><td>Document</td><td>Complete system flow and module guide</td></tr>
+        <tr><td>Prepared for</td><td>Ash Aviation Stores (United Kingdom)</td></tr>
+        <tr><td>Purpose</td><td>Demo, training and approval of the digital stores panel</td></tr>
+        <tr><td>Currency / dates</td><td>GBP (£) · DD/MM/YYYY</td></tr>
+        <tr><td>Demo login</td><td>admin@demo.local · admin123</td></tr>
+        <tr><td>Date</td><td>September 2026</td></tr>
+        <tr><td>Status</td><td>Working demonstration — local data, production-ready product flow</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>1. Purpose of this document</h2>
+    <p>This guide explains, in plain English, how the new stores system works from start to finish. It is written for managers and stores staff who currently use Excel. It can be used as a presentation script, a training handout, or a record of what has been built for approval.</p>
+    <p>The software is a <strong>working application</strong>, not a set of static screens. Staff can book goods in, update stock, cost a GRN, print paperwork, search parts and produce reports. Data is saved in the browser so it remains after refresh. After approval, the same screens can be connected to a live company database without rebuilding the front end.</p>
+  </section>
+
+  <section class="section">
+    <h2>2. The Excel process today</h2>
+    <p>Stores currently run three related spreadsheets:</p>
+    <table class="data">
+      <thead><tr><th>Excel sheet</th><th>What staff do</th><th>Typical difficulty</th></tr></thead>
+      <tbody>
+        <tr><td>GRN Booking In</td><td>Record a delivery: GRN number, supplier, invoice, part number, serial, quantity, store, job</td><td>Re-typing part names; mixed spellings; one delivery spread over many rows</td></tr>
+        <tr><td>GRN Costing Input</td><td>Enter cost, calculate sale price and profit</td><td>Hidden formulas; VLOOKUP; POA treated as zero and profit going wrong</td></tr>
+        <tr><td>Print Sheet</td><td>Print the GRN for the file or hangar</td><td>Print layout separate from live data; copy/paste drift</td></tr>
+      </tbody>
+    </table>
+    <p>Stock on the shelf, job cost (for example JOB 123), supplier spend and “where is this washer?” are answered by scrolling, filtering or memory. There is no reliable audit of who changed what.</p>
+  </section>
+
+  <section class="section">
+    <h2>3. What has been built instead</h2>
+    <p>One admin panel replaces the three sheets and the surrounding paperwork. The <strong>business rules stay the same</strong> — GRN numbers such as GR10-11, part numbers, serials, alternate P/Ns, workpacks, store boxes, automatic mark-up, manual sale prices, POA and print. The Excel look is not copied; the aviation stores process is.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Kept from Excel</h3>
+        <ul>
+          <li>Real GRN numbers (not a new coded format)</li>
+          <li>Header plus line items on one GRN</li>
+          <li>Alternate part numbers</li>
+          <li>Cost bands and POA</li>
+          <li>Jobs / workpacks and aircraft registration</li>
+          <li>ASH BOX / Paint Room style locations</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Improved in the system</h3>
+        <ul>
+          <li>One place for booking, costing and print</li>
+          <li>Stock calculated from movements, not a typed cell</li>
+          <li>Search by P/N, STD-8, invoice, serial or job</li>
+          <li>Job, supplier and store reports in one click</li>
+          <li>Cancel a GRN without losing history</li>
+          <li>CSV / PDF export for accounts and meetings</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-break section">
+    <h2>4. End-to-end daily flow</h2>
+    <p>This is the complete stores journey. Use this sequence in a live demonstration.</p>
+    <div class="flow">
+      <div class="flow-step"><b>1. Master data</b>Part, supplier, store and job exist once in the catalogue.</div>
+      <div class="flow-step"><b>2. Book in</b>Create a GRN: header for the delivery, items for each part.</div>
+      <div class="flow-step"><b>3. Stock</b>Save receives stock automatically. Qty rises in the right box.</div>
+      <div class="flow-step"><b>4. Cost</b>Open costing. Sale price from rules, or manual, or POA.</div>
+      <div class="flow-step"><b>5. Print</b>Print sheet or PDF from the same GRN.</div>
+      <div class="flow-step"><b>6. Report</b>Stock, profit, job, supplier or movements as needed.</div>
+    </div>
+
+    <h3>Worked example (demo)</h3>
+    <ol>
+      <li>A delivery arrives from <strong>Adams</strong> for <strong>JOB 123</strong>.</li>
+      <li>Stores open <strong>GRNs → New GRN</strong>, keep or enter the GRN number, choose Adams, invoice, tracking, batch, job and aircraft registration.</li>
+      <li>Under <strong>GRN items</strong> they select part <strong>MS123</strong> (alternate <strong>ALT-123</strong>), quantity 50, purchase cost £20, location <strong>ASH BOX 1</strong>.</li>
+      <li>If more parts are on the same invoice they click <strong>Add item</strong> and enter the next line. One save books the whole delivery.</li>
+      <li><strong>Save GRN and receive stock</strong> — inventory for that part increases by 50. A RECEIPT movement is stored.</li>
+      <li>They open <strong>Cost this GRN</strong>. Cost £20 sits in the £10–£25 band, so automatic sale is <strong>£27</strong> (× 1.35). Total cost £1,000, total sale £1,350, profit £350.</li>
+      <li>If a special price is agreed they switch the line to <strong>Manual override</strong> (for example £32.67). If the part is too expensive or not yet quoted they choose <strong>POA</strong> — the system will not invent a pound figure.</li>
+      <li>They <strong>save costing</strong>, then <strong>Print / PDF</strong>.</li>
+      <li>Later, hangar needs the parts: Inventory → Adjust → <strong>Issue</strong> against JOB 123. Stock falls. JOB 123 still shows what was received, issued, cost and profit.</li>
+    </ol>
+    <div class="callout"><strong>One sentence for the meeting:</strong> book the delivery once, stock updates itself, sale and profit follow company rules, print and reports use the same numbers.</div>
+  </section>
+
+  <section class="section">
+    <h2>5. How the records fit together</h2>
+    <table class="data">
+      <thead><tr><th>Record</th><th>Plain meaning</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Part</td><td>What the item is — one catalogue card, used on many GRNs</td><td>NAS1149F0463P washer</td></tr>
+        <tr><td>Alternate P/N</td><td>Another name for the same part, not a second stock item</td><td>STD-8, AN960-416</td></tr>
+        <tr><td>Supplier</td><td>Who it was bought from</td><td>Adams, Airpart</td></tr>
+        <tr><td>Location</td><td>Which box or room it is stored in</td><td>ASH BOX 2, Paint Room</td></tr>
+        <tr><td>Workpack / Job</td><td>Which aircraft job it belongs to</td><td>JOB 123, aircraft G-ICRM</td></tr>
+        <tr><td>GRN header</td><td>One incoming delivery / invoice</td><td>GR26734 from Adams</td></tr>
+        <tr><td>GRN item</td><td>One part line on that delivery</td><td>50 washers, serial, batch, box</td></tr>
+        <tr><td>Stock movement</td><td>A receipt, issue, return, adjustment or transfer</td><td>+50 RECEIPT, −10 ISSUE</td></tr>
+        <tr><td>Costing</td><td>Cost, sale and profit on a GRN line</td><td>Automatic £27 or POA</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page-break section">
+    <h2>6. Module guide — every section in the panel</h2>
+
+    <h3>6.1 Login and layout</h3>
+    <p>Staff sign in with email and password. The left menu holds every module. The top bar searches across GRN, part number, alternate P/N, supplier, invoice, serial, batch, workpack and location. Sign out is on the right.</p>
+    <p><strong>Demo:</strong> admin@demo.local / admin123 · open http://localhost:3000 after <span class="sans">npm run dev</span>.</p>
+
+    <h3>6.2 Dashboard</h3>
+    <p>The home screen. Live totals for GRNs, parts, stock quantity, stock cost value, potential sales, potential profit, suppliers and active jobs. A GRN chart, low or zero stock, and recent receipts, movements and costings. This is the picture that previously took several Excel filters to assemble.</p>
+
+    <h3>6.3 Parts</h3>
+    <p>The product catalogue. Create a part once; select it on every future GRN. Fields: part number, description, category, unit of measure (EA, BOX, LTR, KIT, SET, M, KG), default cost and sale (hints only), status, notes and alternate numbers.</p>
+    <p><strong>Alternate P/N:</strong> the same physical part often has a manufacturer number, an equivalent (AN/NAS), a supplier code and a shop short code. Example: NAS1149F0463P also searched as STD-8. Alternates are search aliases, not extra stock.</p>
+    <p>The part page shows current stock, last supplier, last cost, movement history, GRN history and linked jobs/costing. Categories include fasteners, washers, bolts, filters, fluids, ignition, seals, hardware, consumables and other.</p>
+
+    <h3>6.4 Suppliers</h3>
+    <p>Vendor master used on GRNs. Name, contact, email, phone, address, notes, active/inactive. The supplier page shows GRN count, total quantity, purchase value, recent receipts and parts supplied. Demo suppliers: Adams and Airpart.</p>
+
+    <h3>6.5 Stores / Locations</h3>
+    <p>Physical places in stores — not jobs. Demo locations: ASH BOX 1 (fasteners), ASH BOX 2 (washers/hardware), ASH BOX 3 (overflow), Paint Room (fluids and consumables). Each has a name, short code, description and status. New racks are added here, then chosen on GRN lines. Inventory and the locations report show stock by box.</p>
+
+    <h3>6.6 Workpacks / Jobs</h3>
+    <p>The aircraft job card. Workpack and job mean the same thing in this system. Number (JOB 123), title, aircraft registration, status (open, in progress, completed, cancelled, archived), dates and notes.</p>
+    <p>Opening a job answers: which parts were associated, which GRNs, received vs issued quantity, cost and profit. A GRN header can belong to one job; individual lines can belong to different jobs on the same invoice. Demo jobs include JOB 10, 47, 80, 123 and SAM6791.</p>
+  </section>
+
+  <section class="page-break section">
+    <h3>6.7 GRNs — booking in</h3>
+    <p>This is Excel’s Booking In sheet. <strong>All GRNs</strong> lists number, date, supplier, workpack and status (draft, received, cancelled, archived). Search by GRN, invoice, tracking or batch.</p>
+    <p><strong>New GRN</strong> has two blocks:</p>
+    <p><strong>Header</strong> (once per delivery): GR number, date, supplier, invoice, tracking, batch, workpack, registration, sheet number of total sheets, notes, optional document.</p>
+    <p><strong>GRN items</strong> (one row per part): part number, alternate P/N, serial, description, quantity, purchase cost each, batch, store location, workpack, notes. Item 1 is required. <strong>Add item</strong> adds the next Excel-style row on the same GRN. The last item cannot be removed, because an empty GRN is not allowed.</p>
+    <p>Save receives stock and writes RECEIPT movements. Historical GRNs stay separate even if the same P/N arrives again. <strong>Cancel</strong> reverses the receipt quantities; the GRN is not permanently deleted. Print and PDF are available from the GRN. GRN numbers remain business numbers (GR10-11, GR259-98). Settings can suggest the next sequence; staff can still type the exact Excel number.</p>
+
+    <h3>6.8 Inventory and stock movements</h3>
+    <p>Current quantity is the sum of movements — it is not a cell staff overwrite. The stock list shows P/N, alternates, quantity, cost, stock value, sale, potential sale, potential profit, location and status. Filter by store. POA lines show POA, not a false pound profit.</p>
+    <p><strong>Adjust</strong> records: Issue (to a job/hangar), Adjustment in, Adjustment out, Return, Transfer. <strong>Stock movements</strong> is the diary: date, part, type, quantity change, GRN, workpack, notes.</p>
+
+    <h3>6.9 Costing</h3>
+    <p>Excel’s Costing Input sheet. Choose a GRN; lines load automatically (no retyping, no VLOOKUP). Four totals: total cost, total sale, profit, profit %.</p>
+    <p>On each line, cost each comes from the GRN. Sale is set by pricing method:</p>
+    <table class="data">
+      <thead><tr><th>Method</th><th>Who sets the sale price</th><th>When to use</th></tr></thead>
+      <tbody>
+        <tr><td>Automatic</td><td>Company pricing rules (cost × multiplier). Sale field locked.</td><td>Normal day-to-day selling</td></tr>
+        <tr><td>Manual override</td><td>Staff type the sale each for this line only</td><td>Special deal, exception, agreed job price</td></tr>
+        <tr><td>POA</td><td>No pound sale or profit is shown</td><td>Not yet quoted, rare, or high-value band</td></tr>
+      </tbody>
+    </table>
+    <p>Figures: total cost = qty × cost each; total sale = qty × sale each; profit = sale − cost; profit % = profit ÷ cost. POA lines are excluded from pound totals so profit cannot be corrupted by a blank or zero.</p>
+
+    <h3>6.10 Pricing rules</h3>
+    <p>The mark-up bands that used to live in spreadsheet formulas. Each rule has priority, label, minimum cost, maximum cost, multiplier or POA, and active flag. Demo bands:</p>
+    <table class="data">
+      <thead><tr><th>Purchase cost (each)</th><th>Sale price</th></tr></thead>
+      <tbody>
+        <tr><td>Under £1</td><td>× 3.00</td></tr>
+        <tr><td>£1 to under £5</td><td>× 1.75</td></tr>
+        <tr><td>£5 to under £10</td><td>× 1.45</td></tr>
+        <tr><td>£10 to under £25</td><td>× 1.35</td></tr>
+        <tr><td>£25 to under £50</td><td>× 1.30</td></tr>
+        <tr><td>£50 to under £100</td><td>× 1.20</td></tr>
+        <tr><td>£100 to under £250</td><td>× 1.18</td></tr>
+        <tr><td>£250 to under £500</td><td>× 1.15</td></tr>
+        <tr><td>£500 and above</td><td>POA</td></tr>
+      </tbody>
+    </table>
+    <p>Low-cost hardware carries a higher multiple; expensive items a lower multiple or quote. Rules can be edited when company policy changes.</p>
+  </section>
+
+  <section class="page-break section">
+    <h3>6.11 Reports — complete list</h3>
+    <p>Reports do not create new figures. They cut the live GRN, stock and costing data. Every report can be filtered (dates, search, supplier, part, workpack) and exported to <strong>CSV</strong> (open in Excel) or <strong>PDF</strong>.</p>
+    <table class="data">
+      <thead><tr><th>#</th><th>Report</th><th>Question it answers</th><th>Main columns</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Inventory</td><td>What is on the shelf now, and what is it worth?</td><td>P/N, alternate, qty, cost, stock value, sale, potential sale/profit, location</td></tr>
+        <tr><td>2</td><td>GRNs</td><td>What was received, from whom, at what purchase value?</td><td>GRN, date, supplier, items, qty, purchase value, workpack, status</td></tr>
+        <tr><td>3</td><td>Costing</td><td>Cost, sale and profit on each line?</td><td>GRN, P/N, qty, cost each, totals, sale, profit, %, method</td></tr>
+        <tr><td>4</td><td>Profit</td><td>Overall profit for a period, supplier or job?</td><td>Same lines plus total cost, sale, profit and profit %</td></tr>
+        <tr><td>5</td><td>Suppliers</td><td>How much business with Adams vs Airpart?</td><td>Name, GRN count, quantity, purchase value (cancelled GRNs excluded)</td></tr>
+        <tr><td>6</td><td>Workpacks</td><td>What did JOB 123 consume and make?</td><td>Job, title, registration, items, qty, cost, sale, profit</td></tr>
+        <tr><td>7</td><td>Stock movements</td><td>When did stock move in or out?</td><td>Date, P/N, type, qty, GRN, workpack, notes</td></tr>
+        <tr><td>8</td><td>Locations</td><td>What is sitting in each box or room?</td><td>Store, code, part count, qty, stock value</td></tr>
+      </tbody>
+    </table>
+
+    <h3>6.12 Documents</h3>
+    <p>Attach invoices, delivery notes, certificates, photos or other files to a GRN, part, workpack or supplier. Download or remove from the documents list. A file can also be attached when saving a GRN. This demo stores files locally; a later production step can move them to company cloud storage.</p>
+
+    <h3>6.13 Excel import</h3>
+    <p>Bring historic workbooks across. Upload .xlsx, .xls or .csv; choose the sheet; map columns (GRN, date, supplier, invoice, tracking, batch, part number, alternate, serial, description, quantity, cost, stores, workpack, notes, sale price); preview valid vs invalid rows; import. Invalid rows are not imported silently. Existing GRN numbers can be preserved.</p>
+
+    <h3>6.14 Activity log</h3>
+    <p>Who did what: creates, updates, stock movements, costing, imports and report exports. Date/time, user, action, entity, reference, description. Operational records are cancelled or archived rather than hard-deleted, which suits aviation traceability.</p>
+
+    <h3>6.15 Settings</h3>
+    <p>Company name, address, phone and email (used on print/PDF). GRN prefix, next sequence number, and whether to suggest automatic numbers (still editable on the GRN). <strong>Reset demo data</strong> (with confirmation) reloads the sample aviation dataset in this browser only — useful before a second demonstration, not for live company data.</p>
+  </section>
+
+  <section class="section">
+    <h2>7. Print sheet and PDF</h2>
+    <p>This is Excel’s third sheet. From a GRN choose Print (screen) or download PDF. The sheet uses the live header, line items and costing where a numeric price exists. Company details come from Settings. Staff no longer maintain a separate print workbook.</p>
+  </section>
+
+  <section class="section">
+    <h2>8. Suggested live demonstration (about 8–10 minutes)</h2>
+    <ol>
+      <li>Sign in → Dashboard (live totals).</li>
+      <li>Parts: show a washer and alternate STD-8.</li>
+      <li>New GRN: Adams, JOB 123, one or two items, ASH BOX, save — stock rises.</li>
+      <li>Cost the GRN: automatic £27 example; optional manual or POA.</li>
+      <li>Print / PDF.</li>
+      <li>Header search: STD-8 or invoice number.</li>
+      <li>Open JOB 123 — parts, GRNs, cost/profit.</li>
+      <li>Reports → Profit or Workpacks; export CSV or PDF.</li>
+      <li>Refresh the browser — the GRN is still there.</li>
+    </ol>
+  </section>
+
+  <section class="page-break section">
+    <h2>9. Excel compared with the new system</h2>
+    <table class="data">
+      <thead><tr><th>Excel today</th><th>Digital system</th></tr></thead>
+      <tbody>
+        <tr><td>Three sheets that can drift apart</td><td>One panel; one set of numbers</td></tr>
+        <tr><td>Part names typed on every row</td><td>Part chosen from the catalogue</td></tr>
+        <tr><td>Store names typed freely</td><td>ASH BOX / Paint Room from a list</td></tr>
+        <tr><td>Job filter in a column</td><td>Workpack page and workpack report</td></tr>
+        <tr><td>Stock as a quantity cell</td><td>Stock from receipts, issues and adjustments</td></tr>
+        <tr><td>Formulas and VLOOKUP</td><td>Pricing engine + costing workspace</td></tr>
+        <tr><td>POA or blank can break profit</td><td>POA shows POA; no false £ total</td></tr>
+        <tr><td>Separate print workbook</td><td>Print/PDF from the GRN</td></tr>
+        <tr><td>Pivot tables for reports</td><td>Eight ready reports, CSV and PDF</td></tr>
+        <tr><td>Little history of changes</td><td>Activity log; cancel rather than delete</td></tr>
+        <tr><td>File on one laptop</td><td>Application ready to move to a shared company database</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>10. Benefits for the company</h2>
+    <ul>
+      <li><strong>Time:</strong> book-in, cost, print and report in one flow instead of three files.</li>
+      <li><strong>Fewer mistakes:</strong> standard mark-up; POA cannot produce a bogus profit.</li>
+      <li><strong>True stock:</strong> goods in raise quantity; issues reduce it; boxes are named.</li>
+      <li><strong>Job costing:</strong> JOB 123 shows parts, cost and profit without rebuilding a pivot.</li>
+      <li><strong>Traceability:</strong> GRN, serial, batch, certificates, who received, who cancelled.</li>
+      <li><strong>History:</strong> existing Excel can be imported; GRN numbers stay as staff know them.</li>
+      <li><strong>Handover:</strong> new staff follow screens rather than undocumented spreadsheet habits.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>11. What this demonstration includes — and what comes next</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Included now</h3>
+        <ul>
+          <li>Full stores flow as described above</li>
+          <li>Sample aviation parts, GRNs, jobs and pricing</li>
+          <li>Data saved in this browser (survives refresh)</li>
+          <li>UK money and date formats</li>
+        </ul>
+      </div>
+      <div>
+        <h3>After approval</h3>
+        <ul>
+          <li>Shared company database (for example PostgreSQL / Supabase)</li>
+          <li>Real user accounts, backups and hosting</li>
+          <li>Optional cloud document storage</li>
+          <li>The same screens — not a rebuild</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted">This demo runs on one computer’s browser. Two people on two PCs do not yet share a live database. That is the intended next production step.</p>
+  </section>
+
+  <section class="section">
+    <h2>12. Sample data loaded for the demo</h2>
+    <ul>
+      <li>Company: Ash Aviation Stores, Hangar 4, Ashford Aerodrome, Kent</li>
+      <li>Suppliers: Adams, Airpart</li>
+      <li>Locations: ASH BOX 1–3, Paint Room</li>
+      <li>Jobs: JOB 10, 47, 80, 123, SAM6791</li>
+      <li>Parts including NAS washers (STD-8), filters, spark plugs, MS123 / ALT-123</li>
+      <li>Pricing tiers as in section 6.10</li>
+      <li>Historic sample GRNs so reports are not empty; next suggested number around GR26734</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>13. Closing statement for the presentation</h2>
+    <div class="callout">Ash Aviation Stores currently books goods in, costs them and prints from three Excel sheets. This system keeps those same aviation fields and pricing habits, and puts them in one working panel: GRN header and items, live stock, automatic or manual or POA selling prices, print, documents, Excel import, job and supplier views, and eight reports. The demonstration is intended for approval of the process. A shared company database can follow without changing how staff already use the screens.</div>
+    <p class="footer-note">Ash Aviation Stores · Inventory, GRN &amp; Costing Management System · Client presentation guide · September 2026 · Working demonstration</p>
+  </section>
+
+</body>
+</html>
