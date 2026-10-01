@@ -1,2 +1,5 @@
-import { InventoryList } from "@/features/inventory/inventory-views";
-export default function InventoryPage() { return <InventoryList />; }
+import { InventoryView } from "@/features/aero/inventory-views";
+
+export default function InventoryPage() {
+  return <InventoryView />;
+}

@@ -1,2 +1,2 @@
-import { SettingsView } from "@/features/settings/settings-view";
-export default function SettingsPage() { return <SettingsView />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

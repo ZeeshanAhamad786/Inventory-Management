@@ -1,4 +1,2 @@
-import { PartsList } from "@/features/parts/parts-list";
-export default function PartsPage() {
-  return <PartsList />;
-}
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

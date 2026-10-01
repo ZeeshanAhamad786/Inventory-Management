@@ -1,2 +1,2 @@
-import { ActivityView } from "@/features/activity/activity-view";
-export default function ActivityPage() { return <ActivityView />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

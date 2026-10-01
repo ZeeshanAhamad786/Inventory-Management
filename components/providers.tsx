@@ -1,8 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { seedIfEmpty } from "@/db/seed";
+import { seedIfEmpty } from "@/db/aero-seed";
 import { LoadingState, ErrorState } from "@/components/shared/states";
+import { useUiStore } from "@/stores/app-store";
+
+function ThemeSync() {
+  const darkMode = useUiStore((s) => s.darkMode);
+
+  useEffect(() => {
+    const apply = (value: boolean) => {
+      document.documentElement.classList.toggle("dark", value);
+    };
+    apply(darkMode);
+    const unsub = useUiStore.persist.onFinishHydration((state) => {
+      apply(state?.darkMode ?? false);
+    });
+    return unsub;
+  }, [darkMode]);
+
+  return null;
+}
 
 export function DatabaseProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -16,7 +34,7 @@ export function DatabaseProvider({ children }: { children: React.ReactNode }) {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center p-6">
+      <div className="flex min-h-screen items-center justify-center bg-background p-6">
         <ErrorState message={error} />
       </div>
     );
@@ -24,11 +42,17 @@ export function DatabaseProvider({ children }: { children: React.ReactNode }) {
 
   if (!ready) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <LoadingState label="Preparing local stores database…" />
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <ThemeSync />
+        <LoadingState label="Preparing Parts Control…" />
       </div>
     );
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <ThemeSync />
+      {children}
+    </>
+  );
 }

@@ -1,2 +1,2 @@
-import { DocumentsView } from "@/features/documents/documents-view";
-export default function DocumentsPage() { return <DocumentsView />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: "ash-aviation-auth",
+      name: "aeroswift-auth",
       onRehydrateStorage: () => (state) => {
         if (state?.user) setServiceUser(state.user);
       },
@@ -34,18 +34,18 @@ export const useAuthStore = create<AuthState>()(
 );
 
 interface UiState {
-  sidebarCollapsed: boolean;
-  toggleSidebar: () => void;
-  setSidebarCollapsed: (value: boolean) => void;
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+  setDarkMode: (value: boolean) => void;
 }
 
 export const useUiStore = create<UiState>()(
   persist(
     (set) => ({
-      sidebarCollapsed: false,
-      toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
-      setSidebarCollapsed: (sidebarCollapsed) => set({ sidebarCollapsed }),
+      darkMode: false,
+      toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
+      setDarkMode: (darkMode) => set({ darkMode }),
     }),
-    { name: "ash-aviation-ui" },
+    { name: "aeroswift-ui" },
   ),
 );

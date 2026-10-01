@@ -1,2 +1,2 @@
-import { MovementsList } from "@/features/inventory/inventory-views";
-export default function MovementsPage() { return <MovementsList />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/inventory"); }

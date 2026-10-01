@@ -1,2 +1,2 @@
-import { GrnList } from "@/features/grns/grn-list";
-export default function GrnsPage() { return <GrnList />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

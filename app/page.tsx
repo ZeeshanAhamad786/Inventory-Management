@@ -12,8 +12,8 @@ export default function HomePage() {
 
   useEffect(() => {
     if (!mounted) return;
-    router.replace(user ? "/dashboard" : "/login");
+    router.replace(user ? "/jobs" : "/login");
   }, [mounted, user, router]);
 
-  return <div className="p-8 text-sm text-muted-foreground">Opening Ash Aviation Stores…</div>;
+  return <div className="p-8 text-sm text-muted-foreground">Opening Aeroswift Parts Control…</div>;
 }

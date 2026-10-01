@@ -21,6 +21,9 @@ const statusMap: Record<string, { label: string; variant: "default" | "secondary
   ADJUSTMENT_OUT: { label: "Adj out", variant: "danger" },
   RETURN: { label: "Return", variant: "default" },
   TRANSFER: { label: "Transfer", variant: "outline" },
+  in_box: { label: "In box", variant: "success" },
+  out_with_someone: { label: "Out with someone", variant: "warning" },
+  used_on_job: { label: "Used on job", variant: "secondary" },
 };
 
 export function StatusBadge({ value }: { value: string }) {

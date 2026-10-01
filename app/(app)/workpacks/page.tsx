@@ -1,2 +1,2 @@
-import { WorkpacksList } from "@/features/workpacks/workpacks-views";
-export default function WorkpacksPage() { return <WorkpacksList />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

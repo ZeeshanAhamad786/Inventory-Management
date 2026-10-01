@@ -1,2 +1,2 @@
-import { PricingRulesView } from "@/features/pricing/pricing-rules-view";
-export default function PricingRulesPage() { return <PricingRulesView />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

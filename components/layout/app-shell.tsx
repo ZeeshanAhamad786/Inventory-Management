@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { Sidebar } from "@/components/layout/sidebar";
-import { Header } from "@/components/layout/header";
+import { useRouter } from "next/navigation";
+import { AeroSidebar, AeroMobileNav } from "@/components/aero/sidebar";
+import { AeroHeader } from "@/components/aero/header";
 import { useAuthStore } from "@/stores/app-store";
 import { setServiceUser } from "@/services/sessionContext";
 import { useMounted } from "@/hooks/use-live-query";
 import { LoadingState } from "@/components/shared/states";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
   const router = useRouter();
   const mounted = useMounted();
   const user = useAuthStore((state) => state.user);
@@ -25,17 +24,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [mounted, user, router]);
 
   if (!mounted || !user) {
-    return <LoadingState label="Checking session…" />;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingState label="Checking session…" />
+      </div>
+    );
   }
 
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar />
+      <AeroSidebar />
       <div className="flex min-w-0 flex-1 flex-col">
-        <Header />
-        <main className="flex-1 p-4 md:p-6" data-path={pathname}>
-          {children}
-        </main>
+        <AeroMobileNav />
+        <AeroHeader />
+        <main className="flex-1 px-4 py-5 md:px-8 md:py-6">{children}</main>
       </div>
     </div>
   );

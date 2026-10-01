@@ -78,6 +78,21 @@ export function fromDateInputValue(value: string) {
   return new Date(`${value}T12:00:00`).toISOString();
 }
 
+/** Parse typed UK dates like 17/09/2026 into ISO, or null if incomplete/invalid. */
+export function parseUkDateInput(value: string): string | null {
+  const trimmed = value.trim();
+  const match = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!match) return null;
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  const iso = `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}T12:00:00`;
+  const date = parseISO(iso);
+  if (!isValid(date)) return null;
+  return date.toISOString();
+}
+
 export function csvEscape(value: unknown) {
   const raw = value === null || value === undefined ? "" : String(value);
   if (/[",\n]/.test(raw)) {

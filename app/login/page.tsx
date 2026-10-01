@@ -2,12 +2,12 @@ import { LoginForm } from "@/features/auth/login-form";
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[hsl(var(--sidebar))] p-6">
+    <div className="flex min-h-screen items-center justify-center bg-[hsl(220_14%_96%)] p-6 dark:bg-background">
       <div className="w-full max-w-md space-y-6">
-        <div className="text-center text-white">
-          <div className="text-sm uppercase tracking-[0.2em] text-white/60">Ash Aviation Stores</div>
-          <h1 className="mt-2 text-3xl font-semibold">Inventory / GRN / Costing</h1>
-          <p className="mt-2 text-sm text-white/70">UK aviation stores administration</p>
+        <div className="text-center">
+          <div className="text-[22px] font-bold tracking-tight">Aeroswift</div>
+          <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Parts Control</div>
+          <p className="mt-3 text-sm text-muted-foreground">Workshop jobs, GRN receiving & stock</p>
         </div>
         <LoginForm />
       </div>

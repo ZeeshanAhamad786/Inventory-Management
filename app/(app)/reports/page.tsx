@@ -1,2 +1,2 @@
-import { ReportsHome } from "@/features/reports/reports-view";
-export default function ReportsPage() { return <ReportsHome />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

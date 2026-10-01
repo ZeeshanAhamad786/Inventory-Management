@@ -1,19 +1,25 @@
 "use client";
 
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface UiState {
   sidebarCollapsed: boolean;
+  darkMode: boolean;
   toggleSidebar: () => void;
-  setSidebarCollapsed: (collapsed: boolean) => void;
-  globalSearch: string;
-  setGlobalSearch: (value: string) => void;
+  toggleDarkMode: () => void;
+  setDarkMode: (value: boolean) => void;
 }
 
-export const useUiStore = create<UiState>()((set) => ({
-  sidebarCollapsed: false,
-  toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
-  setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
-  globalSearch: "",
-  setGlobalSearch: (value) => set({ globalSearch: value }),
-}));
+export const useUiStore = create<UiState>()(
+  persist(
+    (set) => ({
+      sidebarCollapsed: false,
+      darkMode: false,
+      toggleSidebar: () => set((s) => ({ sidebarCollapsed: !s.sidebarCollapsed })),
+      toggleDarkMode: () => set((s) => ({ darkMode: !s.darkMode })),
+      setDarkMode: (darkMode) => set({ darkMode }),
+    }),
+    { name: "aeroswift-ui" },
+  ),
+);

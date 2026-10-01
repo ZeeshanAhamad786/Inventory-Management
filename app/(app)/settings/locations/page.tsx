@@ -1,2 +1,2 @@
-import { LocationsView } from "@/features/locations/locations-view";
-export default function LocationsPage() { return <LocationsView />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/jobs"); }

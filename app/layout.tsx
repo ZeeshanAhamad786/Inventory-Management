@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ash Aviation Stores",
-  description: "Inventory, GRN and costing management for UK aviation stores",
+  title: "Aeroswift Parts Control",
+  description: "Workshop jobs, GRN receiving and parts stock control",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
