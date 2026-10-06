@@ -105,10 +105,11 @@ export async function extractWithAzure(bytes: ArrayBuffer, contentType: string):
   const doc = payload.analyzeResult?.documents?.[0];
   const fields = doc?.fields ?? {};
 
-  // Start from text heuristics (aviation part numbers / batch / cert patterns)
+  // Start from aviation packing-list / part heuristics (works for Superior CoC sheets too)
   const parsed = parseInvoiceText(content);
   parsed.engine = "azure";
   parsed.rawText = content || parsed.rawText;
+  const heuristicLines = parsed.lines;
 
   const vendorName = fieldText(fields.VendorName) || fieldText(fields.MerchantName);
   const invoiceId = fieldText(fields.InvoiceId) || fieldText(fields.InvoiceNumber);
@@ -116,7 +117,9 @@ export async function extractWithAzure(bytes: ArrayBuffer, contentType: string):
   const purchaseOrder = fieldText(fields.PurchaseOrder);
   const customerName = fieldText(fields.CustomerName);
 
-  if (vendorName) parsed.supplierName = vendorName;
+  // Prefer CoC / packing-list manufacturer over Sold-to customer when heuristics found it
+  if (vendorName && !parsed.supplierName.includes("Superior")) parsed.supplierName = vendorName;
+  else if (vendorName && !parsed.supplierName) parsed.supplierName = vendorName;
   if (invoiceId) parsed.invoiceReference = invoiceId;
   if (invoiceDate) parsed.date = invoiceDate;
   if (purchaseOrder) {
@@ -134,7 +137,6 @@ export async function extractWithAzure(bytes: ArrayBuffer, contentType: string):
       const productCode = fieldText(obj.ProductCode);
       const qty = obj.Quantity?.valueNumber ?? (Number(fieldText(obj.Quantity)) || 1);
       const unit = fieldText(obj.Unit) || "EA";
-      // Prefer product code as part number; else parse description with our heuristics
       const fromDesc = parseInvoiceText(`${productCode} ${description}`);
       const partNumber = productCode || fromDesc.lines[0]?.partNumber || "";
       return {
@@ -152,9 +154,17 @@ export async function extractWithAzure(bytes: ArrayBuffer, contentType: string):
       };
     });
 
-    // Prefer Azure lines when they look useful
-    if (azureLines.some((l) => l.partNumber || l.description.length > 3)) {
-      parsed.lines = azureLines;
+    const azureUseful = azureLines.filter((l) => l.partNumber || l.description.length > 3);
+    const heuristicScore = heuristicLines.filter((l) => l.batchNumber || /^S[AL]/i.test(l.partNumber)).length;
+    const azureScore = azureUseful.filter((l) => l.partNumber).length;
+
+    // Packing lists often have weak Azure Items — keep aviation heuristic lines when richer
+    if (azureUseful.length && azureScore >= heuristicScore && azureScore > 0) {
+      parsed.lines = azureUseful;
+    } else if (heuristicLines.length) {
+      parsed.lines = heuristicLines;
+    } else {
+      parsed.lines = azureUseful;
     }
   }
 
@@ -175,7 +185,10 @@ export async function extractWithAzure(bytes: ArrayBuffer, contentType: string):
   parsed.warnings = parsed.warnings.filter((w) => !w.includes("not detected") || !parsed.supplierName);
   if (!parsed.supplierName) parsed.warnings.push("Supplier not found — check Vendor name on the invoice.");
   if (!parsed.lines.length) parsed.warnings.push("No line items found — enter the part manually.");
-  parsed.warnings.unshift("Read by Azure Document Intelligence (UK-ready). Review fields before Add part.");
+  parsed.warnings.unshift("Read by Azure Document Intelligence (UK-ready). Review every line — each becomes its own GRN.");
+  if (parsed.lines.length > 1) {
+    parsed.warnings.unshift(`${parsed.lines.length} product lines found — confirm details, then create ${parsed.lines.length} GRNs.`);
+  }
 
   return parsed;
 }
